@@ -1,0 +1,198 @@
+-- phpMyAdmin SQL Dump
+-- version 5.1.1
+-- https://www.phpmyadmin.net/
+--
+-- Hôte : 127.0.0.1:3306
+-- Généré le : mer. 04 mai 2022 à 15:06
+-- Version du serveur : 10.4.22-MariaDB
+-- Version de PHP : 8.0.15
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de données : `dbqcm`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `form`
+--
+
+CREATE TABLE `form` (
+  `id_form` int(11) NOT NULL,
+  `lib_form` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `form`
+--
+
+INSERT INTO `form` (`id_form`, `lib_form`) VALUES
+(1, 'JEE'),
+(2, 'PHP'),
+(3, 'ORACLE');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `question`
+--
+
+CREATE TABLE `question` (
+  `id_question` int(11) NOT NULL,
+  `id_form` int(11) NOT NULL,
+  `lib_question` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `question`
+--
+
+INSERT INTO `question` (`id_question`, `id_form`, `lib_question`) VALUES
+(1, 1, ' Quelle méthode est appelée en premier à chaque appel d’une servlet '),
+(2, 1, ' Quelle est la portée de l’objet d’une réponse '),
+(3, 1, 'Dans JSP, comment pouvez-vous savoir quelle méthode HTTP (GET ou POST) est utilisée par la requête du client '),
+(4, 1, 'Quelle est la différence entre l’utilisation de « forward » et « sendRedirect() » '),
+
+(5, 2, 'Laquelle des fonctions suivantes crée un tableau'),
+(6, 2, 'Pouvez-vous attribuer une valeur par défaut à un paramètre de fonction'),
+(7, 2, 'Laquelle des méthodes suivantes connecte une base de données MySql en utilisant PHP'),
+
+(8, 3, 'Lenvironnement du base de données dans Oracle est appelé...'),
+(9, 3, 'Quelle est la plus petite unité de stockage dans une base de données Oracle'),
+(10, 3, 'Une collection d’informations stockées dans une base de données à un moment donné est appelée');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `reponse`
+--
+
+CREATE TABLE `reponse` (
+  `id_reponse` int(11) NOT NULL,
+  `id_question` int(11) NOT NULL,
+  `lib_reponse` varchar(255) NOT NULL,
+  `correct` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `reponse`
+--
+
+INSERT INTO `reponse` (`id_reponse`, `id_question`, `lib_reponse`, `correct`) VALUES
+(1, 1, 'init()', 1),
+(2, 1, 'start()', 0),
+(3, 1, 'run()', 0),
+
+(4, 2, 'request', 0),
+(5, 2, 'session', 0),
+(6, 2, 'page',1),
+
+(7, 3, 'En utilisant request.getMethod() ',1),
+(8, 3, 'En utilisant request.setMethod() ',0),
+(9, 3, 'Impossible de savoir',0),
+
+(10,4 , 'forward s’exécute côté client pendant que sendRedirect() s’exécute côté serveur.',0),
+(11, 4, 'forward s’exécute côté serveur pendant que sendRedirect () s’exécute côté client.',1),
+(12, 4, ' Les deux méthodes fonctionnent de manière identique',0),
+
+(13, 5, 'array()',1),
+(14, 5, 'table()',0),
+(15, 5, 'new array[]',0),
+
+(16, 6, 'vrai',1),
+(17, 6, 'faux',0),
+
+(18, 7, 'mysql_connect()',1),
+(19, 7, 'mysql_query()',0),
+(20, 7, 'connect()',0),
+
+(21, 8, 'schema',0),
+(22, 8, 'instance',1),
+(23, 8,'structure de donnee',0),
+
+(24, 9, 'Bloc de données',1),
+(25, 9, 'segment',0),
+(26, 9,'aucune reponse',0),
+
+(27, 10, 'Instance du base de donnee',1),
+(28, 10, ' Objets dans la base de donnée',0),
+(29, 10,'structure de donnee',0);
+
+
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `form`
+--
+ALTER TABLE `form`
+  ADD PRIMARY KEY (`id_form`);
+
+--
+-- Index pour la table `question`
+--
+ALTER TABLE `question`
+  ADD PRIMARY KEY (`id_question`),
+  ADD KEY `id_form` (`id_form`);
+
+--
+-- Index pour la table `reponse`
+--
+ALTER TABLE `reponse`
+  ADD PRIMARY KEY (`id_reponse`),
+  ADD KEY `id_question` (`id_question`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `form`
+--
+ALTER TABLE `form`
+  MODIFY `id_form` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT pour la table `question`
+--
+ALTER TABLE `question`
+  MODIFY `id_question` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT pour la table `reponse`
+--
+ALTER TABLE `reponse`
+  MODIFY `id_reponse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `question`
+--
+ALTER TABLE `question`
+  ADD CONSTRAINT `question_libfk_1` FOREIGN KEY (`id_form`) REFERENCES `form` (`id_form`);
+
+--
+-- Contraintes pour la table `reponse`
+--
+ALTER TABLE `reponse`
+  ADD CONSTRAINT `reponse_libfk_1` FOREIGN KEY (`id_question`) REFERENCES `question` (`id_question`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
